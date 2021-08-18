@@ -12,10 +12,14 @@ import { AccountModule } from './modules/account/account.module'
 import { TransactionModule } from './modules/transaction/transaction.module'
 import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler'
 import { AppGateway } from './app.gateway'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import { join } from 'path'
+import { AppController } from './app.controller'
 
 @Module({
   imports: [
     ThrottlerModule.forRoot({ttl: 60, limit: 10}), // Rate Limiting
+    ServeStaticModule.forRoot({rootPath: join(__dirname, '..', 'resources')}),
     AuthModule,
     RedisModule,
     MongooseModule.forRoot(MONGO_URI),
@@ -34,7 +38,7 @@ import { AppGateway } from './app.gateway'
     },
     AppGateway
   ],
-  controllers: [HealthController]
+  controllers: [HealthController, AppController]
 })
 export class AppModule implements NestModule {
   configure (consumer: MiddlewareConsumer): void {

@@ -1,4 +1,6 @@
 import 'reflect-metadata'
+import path from 'path'
+import dotenv from 'dotenv'
 import { NestFactory } from '@nestjs/core'
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger'
@@ -7,13 +9,12 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 import { AppModule } from './app.module'
 import { corsConfiguration } from './config/cors-configuration'
 import { SocketAdapter } from './config/socket-configuration'
-import dotenv from 'dotenv'
 
 dotenv.config();
-
 async function bootstrap () {
   const cors: CorsOptions = corsConfiguration
   const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors })
+
   app.disable('x-powered-by')
   app.useWebSocketAdapter(new SocketAdapter(app));
 

@@ -8,6 +8,8 @@ import {
 } from '@nestjs/websockets';
 import { Logger } from '@nestjs/common';
 import { Socket, Server } from 'socket.io';
+import path from 'path';
+import fs from 'fs';
    
 @WebSocketGateway()
 export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGatewayDisconnect {
@@ -16,12 +18,22 @@ export class AppGateway implements OnGatewayInit, OnGatewayConnection, OnGateway
    
   @SubscribeMessage('event.interaction')
   handleInteractionMessage(client: Socket, payload: string): void {
-    this.logger.log(payload)
+    const content = payload + '\r\n'
+    fs.open(path.join(__dirname, '..', './resources/interactions.txt'), 'a', 666, function( e, id ) {
+      fs.write( id, content + '\r\n', null, 'utf8', function(){
+        fs.close(id, () => {})
+      })
+    })
   }
 
   @SubscribeMessage('event.error')
-  handleerrorMessage(client: Socket, payload: string): void {
-    this.logger.log(payload)
+  handleErrorMessage(client: Socket, payload: string): void {
+    const content = payload + '\r\n'
+    fs.open(path.join(__dirname, '..', './resources/errors.txt'), 'a', 666, function( e, id ) {
+      fs.write( id, content + '\r\n', null, 'utf8', function(){
+        fs.close(id, () => {});
+      })
+    })
   }
    
   afterInit(server: Server) {
