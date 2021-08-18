@@ -2,7 +2,7 @@ import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.int
 
 const corsConfiguration: CorsOptions = {
   origin: ['https://mono-socket-service.herokuapp.com'],
-  methods: ['GET', 'PUT', 'PATCH', 'POST', 'DELETE'],
+  methods: ['GET', 'PUT', 'PATCH', 'POST', 'DELETE', 'OPTIONS'],
   maxAge: 3600,
   preflightContinue: false,
   optionsSuccessStatus: 204,
