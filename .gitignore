@@ -1,0 +1,17 @@
+# compiled output
+/dist
+/node_modules
+
+# Tests
+/coverage
+/.nyc_output
+
+# misc
+/.idea
+/pgdata
+/redisdata
+.DS_Store
+
+.env
+
+*.pem
