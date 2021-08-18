@@ -10,9 +10,10 @@ import dotenv from 'dotenv'
 dotenv.config();
 
 async function bootstrap () {
-  let cors: CorsOptions = corsConfiguration
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors })
+  const cors: CorsOptions = corsConfiguration
+  const app = await NestFactory.create<NestExpressApplication>(AppModule)
   app.disable('x-powered-by')
+  app.enableCors(cors)
 
   const options = new DocumentBuilder()
     .setTitle('Mono Service API')
