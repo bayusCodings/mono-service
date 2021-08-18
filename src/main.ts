@@ -6,14 +6,16 @@ import { NestExpressApplication } from '@nestjs/platform-express'
 import { CorsOptions } from '@nestjs/common/interfaces/external/cors-options.interface'
 import { AppModule } from './app.module'
 import { corsConfiguration } from './config/cors-configuration'
+import { SocketAdapter } from './config/socket-configuration'
 import dotenv from 'dotenv'
+
 dotenv.config();
 
 async function bootstrap () {
   const cors: CorsOptions = corsConfiguration
-  const app = await NestFactory.create<NestExpressApplication>(AppModule)
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, { cors })
   app.disable('x-powered-by')
-  app.enableCors(cors)
+  app.useWebSocketAdapter(new SocketAdapter(app));
 
   const options = new DocumentBuilder()
     .setTitle('Mono Service API')
