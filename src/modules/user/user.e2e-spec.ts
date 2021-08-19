@@ -56,19 +56,19 @@ describe('Properties', () => {
     })
 
 
-    // it('Should not create if user already exist', async () => {
-    //   MockUserRepository.findByEmail.mockResolvedValue(user);
-    //   const userCreationDto = user
+    it('Should not create if user already exist', async () => {
+      MockUserRepository.findByEmail.mockResolvedValue(user);
+      const userCreationDto = user
 
-    //   return httpRequestServer
-    //     .post('/user')
-    //     .set('Accept', 'application/json')
-    //     .send(userCreationDto)
-    //     .expect(412)
-    //     .expect(res => {
-    //       expect(res.body.message).toBe('User account already exist')
-    //   })
-    // })
+      return httpRequestServer
+        .post('/user')
+        .set('Accept', 'application/json')
+        .send(userCreationDto)
+        .expect(412)
+        .expect(res => {
+          expect(res.body.message).toBe('User account already exist')
+      })
+    })
   })
 
   afterEach(async () => {
