@@ -4,7 +4,7 @@ import { Cache } from 'cache-manager-redis-store';
 @Injectable()
 export class RedisService {
     private readonly logger = new Logger(RedisService.name);
-    private keyPrefix = 'VeriHQ_';
+    private keyPrefix = 'mono_';
 
     constructor (
         @Inject(CACHE_MANAGER) public cacheManager: Cache
